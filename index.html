@@ -1,24 +1,63 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DigiSpeak</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Comic Neue', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+    }
+
+    .splash-container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      font-size: 1.2em;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .credit {
+      font-size: 0.9em;
+      margin-top: 20px;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-  <div class="splash-screen">
-    <img src="logo.png" alt="DigiSpeak Logo" class="logo-image" />
+  <div class="splash-container">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
     <h1>DigiSpeak</h1>
-    <p class="tagline">Healthy screen time powered by Speech Therapist Expertise</p>
-    <p class="branding">By Supraja Prabhu, Pediatric Speech & Hearing Expert</p>
+    <div class="tagline">Healthy Screen Time, Powered by Speech Therapist Expertise</div>
+    <div class="credit">by Supraja Prabhu, Pediatric Speech and Hearing Expert</div>
   </div>
-
+  <!-- Temporarily redirect to self to avoid 404 -->
   <script>
-    // Simulate loading transition
-    setTimeout(() => {
-      window.location.href = "onboarding.html";
-    }, 2500);
+    setTimeout(() => window.location.href = 'index.html', 3000);
   </script>
 </body>
 </html>
