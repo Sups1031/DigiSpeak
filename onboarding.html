@@ -1,1 +1,122 @@
-<h2>Onboarding screens go here</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Onboarding - DigiSpeak</title>
+  <link href="style.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Comic Neue', sans-serif;
+      background: linear-gradient(to right, #c6e2ff, #a6cfff);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .onboarding-container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .checkbox-group {
+      margin-top: 10px;
+    }
+
+    .checkbox-group label {
+      font-weight: normal;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    button {
+      background-color: #3b82f6;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="onboarding-container">
+    <h1>Let’s Personalize DigiSpeak!</h1>
+
+    <label for="dob">Child's Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+
+    <label>Select Your Goals:</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="goals" value="Communication"> Communication & Language</label>
+      <label><input type="checkbox" name="goals" value="Literacy"> Early Literacy</label>
+      <label><input type="checkbox" name="goals" value="Emotional"> Emotional Regulation</label>
+      <label><input type="checkbox" name="goals" value="Sensory"> Sensory Play</label>
+      <label><input type="checkbox" name="goals" value="Social"> Social Skills</label>
+    </div>
+
+    <div class="button-container">
+      <button onclick="submitOnboarding()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    function submitOnboarding() {
+      const dob = document.getElementById("dob").value;
+      const goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(el => el.value);
+
+      if (!dob || goals.length === 0) {
+        alert("Please enter Date of Birth and select at least one goal.");
+        return;
+      }
+
+      // Save to localStorage (can be accessed later in other pages)
+      localStorage.setItem("dob", dob);
+      localStorage.setItem("goals", JSON.stringify(goals));
+
+      // Redirect to home
+      window.location.href = "home.html";
+    }
+  </script>
+
+</body>
+</html>
