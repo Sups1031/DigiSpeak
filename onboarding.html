@@ -21,7 +21,7 @@
       background: white;
       border-radius: 12px;
       padding: 30px;
-      max-width: 600px;
+      max-width: 650px;
       width: 100%;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
@@ -29,6 +29,8 @@
     h1 {
       text-align: center;
       color: #333;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
     }
 
     label {
@@ -47,14 +49,29 @@
       border: 1px solid #ccc;
     }
 
-    .checkbox-group {
-      margin-top: 10px;
+    .goal-category {
+      background-color: #f2f8ff;
+      border: 1px solid #d1e3ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s;
     }
 
-    .checkbox-group label {
-      font-weight: normal;
-      display: block;
-      margin-bottom: 10px;
+    .goal-category:hover {
+      background-color: #e6f0ff;
+    }
+
+    .goal-category input {
+      margin-right: 12px;
+      transform: scale(1.3);
+    }
+
+    .goal-text {
+      line-height: 1.3;
     }
 
     .button-container {
@@ -85,13 +102,36 @@
     <label for="dob">Child's Date of Birth:</label>
     <input type="date" id="dob" name="dob" required>
 
-    <label>Select Your Goals:</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="goals" value="Communication"> Communication & Language</label>
-      <label><input type="checkbox" name="goals" value="Literacy"> Early Literacy</label>
-      <label><input type="checkbox" name="goals" value="Emotional"> Emotional Regulation</label>
-      <label><input type="checkbox" name="goals" value="Sensory"> Sensory Play</label>
-      <label><input type="checkbox" name="goals" value="Social"> Social Skills</label>
+    <label style="margin-top: 30px;">What would you like help with?<br>(Select all that apply)</label>
+
+    <div class="goal-category">
+      <input type="checkbox" id="screen" value="Healthy Screen Time">
+      <div class="goal-text">📱 <strong>Healthy Screen Time</strong><br>Reduce usage or improve the quality of screentime</div>
+    </div>
+
+    <div class="goal-category">
+      <input type="checkbox" id="communication" value="Communication & Learning">
+      <div class="goal-text">🔤 <strong>Communication & Learning</strong><br>Help my child develop language, emotional, or academic skills</div>
+    </div>
+
+    <div class="goal-category">
+      <input type="checkbox" id="video" value="Personalized Video Suggestions">
+      <div class="goal-text">🎯 <strong>Personalized Video Suggestions</strong><br>Find the right content for my child’s interests and needs</div>
+    </div>
+
+    <div class="goal-category">
+      <input type="checkbox" id="independent" value="Independent Engagement">
+      <div class="goal-text">🧸 <strong>Independent Engagement</strong><br>Keep my child meaningfully engaged when I’m busy</div>
+    </div>
+
+    <div class="goal-category">
+      <input type="checkbox" id="special" value="Special Needs Support">
+      <div class="goal-text">🧩 <strong>Special Needs Support</strong><br>For neurodivergent or speech-delayed children</div>
+    </div>
+
+    <div class="goal-category">
+      <input type="checkbox" id="parental" value="Parental Confidence">
+      <div class="goal-text">👨‍👩‍👧 <strong>Parental Confidence</strong><br>Get guidance from a speech therapist on screen habits</div>
     </div>
 
     <div class="button-container">
@@ -102,18 +142,17 @@
   <script>
     function submitOnboarding() {
       const dob = document.getElementById("dob").value;
-      const goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(el => el.value);
+      const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+      const goals = Array.from(checked).map(el => el.value);
 
       if (!dob || goals.length === 0) {
         alert("Please enter Date of Birth and select at least one goal.");
         return;
       }
 
-      // Save to localStorage (can be accessed later in other pages)
       localStorage.setItem("dob", dob);
       localStorage.setItem("goals", JSON.stringify(goals));
 
-      // Redirect to home
       window.location.href = "home.html";
     }
   </script>
