@@ -1,2 +1,79 @@
+
 <!DOCTYPE html>
-<html><head><title>Screen-Free</title></head><body><h2>Screen-Free Activity Quiz</h2></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Screen-Free Activity Questionnaire</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Find the Best Screen-Free Activities</h1>
+        <form id="questionnaireForm">
+            <div class="question" id="q1">
+                <label for="age">1. What is your child's age?</label>
+                <select id="age" name="age" required>
+                    <option value="" disabled selected>Select age</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
+
+            <div class="question" id="q2">
+                <label>2. What are your child's interests?</label><br>
+                <input type="checkbox" name="interests" value="Animals"> Animals<br>
+                <input type="checkbox" name="interests" value="Vehicles"> Vehicles<br>
+                <input type="checkbox" name="interests" value="Music"> Music<br>
+                <input type="checkbox" name="interests" value="Colors"> Colors<br>
+                <input type="checkbox" name="interests" value="Blocks"> Building Blocks<br>
+                <input type="checkbox" name="interests" value="Nature"> Nature<br>
+            </div>
+
+            <div class="question" id="q3">
+                <label>3. What skills would you like to support?</label><br>
+                <input type="checkbox" name="goals" value="Communication"> Communication<br>
+                <input type="checkbox" name="goals" value="FineMotor"> Fine Motor<br>
+                <input type="checkbox" name="goals" value="GrossMotor"> Gross Motor<br>
+                <input type="checkbox" name="goals" value="PretendPlay"> Pretend Play<br>
+                <input type="checkbox" name="goals" value="Sensory"> Sensory Play<br>
+            </div>
+
+            <div class="question" id="q4">
+                <label>4. Any concerns or conditions?</label><br>
+                <input type="checkbox" name="conditions" value="ASD"> ASD<br>
+                <input type="checkbox" name="conditions" value="ADHD"> ADHD<br>
+                <input type="checkbox" name="conditions" value="LangDelay"> Language Delay<br>
+                <input type="checkbox" name="conditions" value="None"> None<br>
+            </div>
+
+            <div class="question" id="q5">
+                <label>5. How much time do you have for activities?</label><br>
+                <input type="radio" name="time" value="15" required> Less than 15 minutes<br>
+                <input type="radio" name="time" value="30"> 15–30 minutes<br>
+                <input type="radio" name="time" value="60"> 30–60 minutes<br>
+                <input type="radio" name="time" value="90"> More than 1 hour<br>
+            </div>
+
+            <div class="question" id="q6">
+                <label>6. What type of play do you prefer?</label><br>
+                <input type="checkbox" name="playType" value="Indoor"> Indoor<br>
+                <input type="checkbox" name="playType" value="Outdoor"> Outdoor<br>
+                <input type="checkbox" name="playType" value="Messy"> Messy Play<br>
+                <input type="checkbox" name="playType" value="Quiet"> Quiet Play<br>
+            </div>
+
+            <button type="submit">Get Recommendations</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
