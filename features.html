@@ -1,40 +1,245 @@
-/* 1. Fluid card width, capped for large screens */
-.slide {
-  width: 90%;            /* take up to 90% of the viewport */
-  max-width: 400px;      /* but never exceed 400px on desktop */
-  margin: 0 auto;        /* center horizontally */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>DigiSpeak Features</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #E0F7F4;
+      --text: #264653;
+      --accent: #89C9B8;
+      --radius: 8px;
+      --gap: 1rem;
+    }
 
-/* 2. Flexbox for vertical stacking and centering */
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;   /* horizontal center */
-  justify-content: center; /* vertical center */
-  min-height: 100vh;     /* fill full height */
-  padding: 1rem;
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* 3. Controls row centers its items, with gap */
-.controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Fredoka', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-/* 4. Skip below controls, always centered */
-.skip-container {
-  width: 100%;
-  text-align: center;    /* center the Skip link */
-  margin-top: 0.5rem;
-}
+    header {
+      padding: var(--gap);
+      text-align: center;
+    }
+    header .title {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: bold;
+    }
 
-/* 5. Responsive typography with clamp() */
-.title {
-  font-size: clamp(1.5rem, 5vw, 2rem);
-}
-.slide h2 {
-  font-size: clamp(1.25rem, 4vw, 1.5rem);
-}
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: var(--gap);
+    }
+
+    .slide-container {
+      width: 90%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .slide {
+      background: white;
+      border-radius: var(--radius);
+      padding: calc(var(--gap) * 2);
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .slide .icon {
+      width: clamp(40px, 15vw, 80px);
+      height: auto;
+      object-fit: contain;
+      margin: 0 auto;
+    }
+
+    .slide h2 {
+      margin-top: var(--gap);
+      font-family: 'Comic Neue', cursive;
+      font-size: clamp(1.25rem, 4vw, 1.5rem);
+    }
+
+    .slide p {
+      margin-top: var(--gap);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--gap);
+      margin-top: var(--gap);
+    }
+
+    .radios {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .radios input {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+    }
+    .radios input:checked::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .btn-next {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--accent);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-next:hover {
+      color: var(--text);
+    }
+
+    .skip-container {
+      width: 100%;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    .skip-container .skip {
+      font-family: 'Comic Neue', cursive;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="title">What DigiSpeak Offers</h1>
+  </header>
+
+  <main>
+    <div class="slide-container">
+      <div class="slide" id="slide"></div>
+
+      <div class="controls">
+        <div class="radios" id="radios"></div>
+        <button class="btn-next" id="nextBtn">&rarr;</button>
+      </div>
+
+      <div class="skip-container">
+        <a href="index.html" class="skip">Skip →</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const slides = [
+      {
+        icon: 'assets/icon_screenfree.png',
+        title: 'Unplug & Connect',
+        description: 'Discover playful, off-screen activities tailored to your child’s age and interests.'
+      },
+      {
+        icon: 'assets/icon_cowatching.png',
+        title: 'Safe Screen Picks',
+        description: 'Find safe, educational shows and apps carefully curated to support your child’s development.'
+      },
+      {
+        icon: 'assets/icon_blog.png',
+        title: 'Gentle Guides',
+        description: 'Receive insights from a seasoned communication specialist, designed to guide you through parent-child interaction in the digital space.'
+      },
+      {
+        icon: 'assets/icon_ai.png',
+        title: 'Your Question Corner',
+        description: 'Ask any question about screen time, speech, or child development and get thoughtful, clear answers you can trust.'
+      }
+    ];
+
+    let idx = 0;
+    const slideEl = document.getElementById('slide');
+    const radiosEl = document.getElementById('radios');
+    const nextBtn = document.getElementById('nextBtn');
+    let autoAdvance;
+
+    function renderRadios() {
+      radiosEl.innerHTML = slides.map((_, i) =>
+        `<input type="radio" name="indicator" ${i === idx ? 'checked' : ''} onclick="goTo(${i})" />`
+      ).join('');
+    }
+
+    function renderSlide() {
+      const s = slides[idx];
+      slideEl.innerHTML = `
+        <img src="${s.icon}" alt="${s.title} icon" class="icon" />
+        <h2>${s.title}</h2>
+        <p>${s.description}</p>
+      `;
+      renderRadios();
+      nextBtn.innerHTML = idx < slides.length - 1 ? '&rarr;' : '&#10003;';
+    }
+
+    function goTo(i) {
+      idx = i;
+      renderSlide();
+      resetAutoAdvance();
+    }
+
+    nextBtn.addEventListener('click', () => {
+      idx++;
+      if (idx >= slides.length) {
+        window.location.href = 'index.html';
+      } else {
+        renderSlide();
+      }
+      resetAutoAdvance();
+    });
+
+    function startAutoAdvance() {
+      autoAdvance = setInterval(() => {
+        idx = (idx + 1) % slides.length;
+        if (idx === 0) {
+          window.location.href = 'index.html';
+        } else {
+          renderSlide();
+        }
+      }, 5000);
+    }
+
+    function resetAutoAdvance() {
+      clearInterval(autoAdvance);
+      startAutoAdvance();
+    }
+
+    // initial render + auto-advance
+    renderSlide();
+    startAutoAdvance();
+  </script>
+
+</body>
+</html>
