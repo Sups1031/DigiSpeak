@@ -29,16 +29,23 @@
       text-align: center;
       padding: 2rem 1rem;
     }
-    .logo {
-      width: 50vw;             /* half the viewport width */
-      max-width: 300px;
+    .logo {    
+width: 60vw; /* 60% of viewport for more presence */
+max-width: 350px; /* bump up the cap */ 
       height: auto;
       margin: 0 auto;
+  animation: pulse-logo 4s ease-in-out infinite;
+}
+
     }
     .title-container {
       text-align: center;
       padding: 0 1rem;
     }
+@keyframes pulse-logo {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.1); }
+}
     @keyframes pulse {
       0%,100% { transform: scale(1); }
       50%     { transform: scale(1.05); }
