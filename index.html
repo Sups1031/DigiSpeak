@@ -60,22 +60,35 @@
     }
     .profile-link {
       display: inline-block;
+      width: 20vw;            /* smaller circle */
+      max-width: 120px;
+      aspect-ratio: 1;        /* force square */
       border-radius: 50%;
       overflow: hidden;
-      width: 25vw;
-      max-width: 150px;
-        height: 25vw;
-  max-height: 150px;
       border: 3px solid var(--accent-color);
       margin-bottom: 0.5rem;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .profile-link:hover {
+      transform: scale(1.05);
+      border-color: var(--text-color);
+    }
+    .profile-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .dev-dev {
+      margin: 0.5rem 0 0;
       font-size: 0.75rem; /* smaller “Developed by” */
-      margin: 0.25rem 0 0;
+      color: var(--text-color);
     }
     .dev-name, .dev-role {
       margin: 0.25rem 0 0;
       font-size: 1rem;
+      font-weight: 600;
     }
     .button {
       display: inline-block;
@@ -108,7 +121,6 @@
 </head>
 <body>
   <header>
-    <!-- ensure your file is named exactly “logo.png” in assets/ -->
     <img src="assets/logo.png" alt="DigiSpeak Logo" class="logo" />
   </header>
 
@@ -120,23 +132,20 @@
   <div class="spacer"></div>
 
   <div class="footer-cta">
-    <!-- ensure your file is named exactly “Supraja.jpg” in assets/ -->
-+<a href="https://linktr.ee/suprajaprabhuASLP" class="profile-link">    
+    <a href="https://linktr.ee/suprajaprabhuASLP" class="profile-link">
       <img src="assets/Supraja.jpg" alt="Supraja Prabhu Profile Photo" />
     </a>
     <p class="dev-dev">Developed by</p>
     <p class="dev-name">Supraja Prabhu</p>
     <p class="dev-role">Pediatric Speech Therapist</p>
-    <a href="https://linktr.ee/suprajaprabhuASLP" target="_blank" rel="noopener" class="button">Get in Touch</a>
+    <a href="https://linktr.ee/supraja" target="_blank" rel="noopener" class="button">Get in Touch</a>
   </div>
 
   <footer>&copy; 2025 DigiSpeak. All rights reserved.</footer>
 
   <script>
-    console.log("Redirecting to features.html in 3.5 seconds…");
-    setTimeout(() => {
-      window.location.href = 'features.html';
-    }, 2500);
+    console.log("Redirecting to features.html in 2.5 seconds…");
+    setTimeout(() => { window.location.href = 'features.html'; }, 2500);
   </script>
 </body>
 </html>
