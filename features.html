@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>DigiSpeak Features</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #E0F7F4;
+      --text: #264653;
+      --accent: #89C9B8;
+      --radius: 8px;
+      --gap: 1rem;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Fredoka', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      position: relative;
+      padding: var(--gap);
+      text-align: center;
+    }
+    .skip {
+      position: absolute;
+      top: var(--gap);
+      right: var(--gap);
+      font-family: 'Comic Neue', cursive;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--gap);
+    }
+    .slide {
+      background: white;
+      border-radius: var(--radius);
+      padding: calc(var(--gap) * 2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .slide .icon { font-size: 2rem; }
+    .slide h2 {
+      margin-top: var(--gap);
+      font-family: 'Comic Neue', cursive;
+      font-size: 1.5rem;
+    }
+    .slide p {
+      margin-top: var(--gap);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    footer {
+      padding: var(--gap);
+      text-align: center;
+    }
+    .btn-next {
+      margin-top: var(--gap);
+      background: var(--accent);
+      color: var(--text);
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Fredoka', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-next:hover {
+      background: var(--text);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="skip">Skip →</a>
+    <h1>What DigiSpeak Does</h1>
+  </header>
+
+  <main>
+    <div class="slide" id="slide"></div>
+  </main>
+
+  <footer>
+    <button class="btn-next" id="nextBtn">Next</button>
+  </footer>
+
+  <script>
+    const slides = [
+      {
+        "icon":"🧩",
+        "title":"Screen-Free Sparks",
+        "description":"Discover playful, off-screen activities tailored to your child’s age and interests. Each spark turns downtime into moments of creativity and growth."
+      },
+      {
+        "icon":"🎬",
+        "title":"SmartScreen Picks",
+        "description":"Find safe, educational shows and apps carefully curated to support your child’s development and spark meaningful co-watching moments."
+      },
+      {
+        "icon":"✍️",
+        "title":"Gentle Guides",
+        "description":"Receive warm, expert tips and insights from a seasoned communication specialist, designed to guide you through everyday parent–child interactions."
+      },
+      {
+        "icon":"💬",
+        "title":"Your Question Corner",
+        "description":"Ask any question about screen time, speech, or child development and get thoughtful, clear answers you can trust."
+      }
+    ];
+
+    let idx = 0;
+    const slideEl = document.getElementById('slide');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function render() {
+      const s = slides[idx];
+      slideEl.innerHTML = `
+        <div class="icon">${s.icon}</div>
+        <h2>${s.title}</h2>
+        <p>${s.description}</p>
+      `;
+      nextBtn.textContent = idx < slides.length - 1 ? 'Next' : 'Done';
+    }
+
+    nextBtn.addEventListener('click', () => {
+      idx++;
+      if (idx >= slides.length) {
+        window.location.href = 'index.html';
+      } else {
+        render();
+      }
+    });
+
+    setTimeout(() => {
+      if (idx < slides.length - 1) nextBtn.click();
+    }, 5000);
+
+    render();
+  </script>
+
+</body>
+</html>
