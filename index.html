@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Auto-redirect fallback after 5s -->
-<meta http-equiv="refresh" content="5;url=features.html" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DigiSpeak</title>
@@ -15,17 +13,11 @@
       --bg-color: #E0F7F4;
       --text-color: #264653;
       --accent-color: #89C9B8;
-      --radius: 50%;
       --transition: 0.3s ease;
     }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Fredoka', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -33,84 +25,60 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
-    header, footer {
+    header {
       text-align: center;
       padding: 2rem 1rem;
     }
-
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
+    .logo {
+      width: 50vw;             /* half the viewport width */
+      max-width: 300px;
+      height: auto;
+      margin: 0 auto;
     }
-
-    .container {
-      max-width: 600px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .title-container {
       text-align: center;
-      gap: 1.5rem;
+      padding: 0 1rem;
     }
-.logo {
-  width: 180px;      /* ↑ bigger */
-  height: auto;
-  display: block;
-  margin: 0 auto 3rem;  /* centered + extra bottom space */
-}
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50%     { transform: scale(1.05); }
+    }
     h1 {
-      margin: 0;
       font-size: 2.5rem;
-      line-height: 1.2;
+      margin: 0.5rem 0;
+      animation: pulse 3s ease-in-out infinite;
     }
-
     .tagline {
       font-family: 'Comic Neue', cursive;
       font-size: 1.25rem;
       margin: 0;
     }
-
+    .spacer { flex: 1; }
     .footer-cta {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      padding: 2rem 1rem 0;
+      text-align: center;
+      padding: 2rem 1rem 1rem;
     }
-
     .profile-link {
-      display: block;
-      border-radius: var(--radius);
+      display: inline-block;
+      border-radius: 50%;
       overflow: hidden;
-      width: 100px;
-      height: 100px;
+      width: 25vw;
+      max-width: 150px;
+      height: auto;
       border: 3px solid var(--accent-color);
-      transition: transform var(--transition), border-color var(--transition);
+      margin-bottom: 0.5rem;
     }
-
-    .profile-link:hover {
-      transform: scale(1.05);
-      border-color: var(--text-color);
+    .dev-dev {
+      font-size: 0.75rem; /* smaller “Developed by” */
+      margin: 0.25rem 0 0;
     }
-
-    .profile-link img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .description {
+    .dev-name, .dev-role {
+      margin: 0.25rem 0 0;
       font-size: 1rem;
-      margin: 0;
     }
-
     .button {
       display: inline-block;
+      margin-top: 1rem;
       padding: 0.75rem 1.5rem;
       font-size: 1rem;
       font-weight: bold;
@@ -119,57 +87,55 @@
       border: none;
       border-radius: 25px;
       text-decoration: none;
-      transition: background-color var(--transition), color var(--transition), transform var(--transition);
+      transition: background-color var(--transition), transform var(--transition);
     }
-
     .button:hover {
       background-color: var(--accent-color);
-      color: var(--text-color);
       transform: translateY(-2px);
     }
-
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.875rem;
+    }
     @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-      .tagline {
-        font-size: 1.1rem;
-      }
-      .profile-link {
-        width: 90px;
-        height: 90px;
-      }
+      h1 { font-size: 2rem; }
+      .tagline { font-size: 1.1rem; }
+      .profile-link { width: 40vw; max-width: 120px; }
     }
   </style>
 </head>
 <body>
   <header>
+    <!-- ensure your file is named exactly “logo.png” in assets/ -->
     <img src="assets/logo.png" alt="DigiSpeak Logo" class="logo" />
   </header>
 
-  <main>
-    <div class="container">
-      <h1>DigiSpeak</h1>
-      <p class="tagline">Healthy Screentime, powered by Professional Expertise</p>
-    </div>
-  </main>
+  <div class="title-container">
+    <h1>DigiSpeak</h1>
+    <p class="tagline">Healthy Screentime, powered by Professional Expertise</p>
+  </div>
+
+  <div class="spacer"></div>
 
   <div class="footer-cta">
-    <a href="https://linktr.ee/suprajaprabhuASLP" target="_blank" rel="noopener" class="profile-link" aria-label="Supraja Prabhu on Linktree">
-      <img src="assets/Supraja.jpg" alt="Supraja Prabhu Profile Photo" />
+    <!-- ensure your file is named exactly “supraja.jpg” in assets/ -->
+    <a href="assets/supraja.jpg" class="profile-link">
+      <img src="assets/supraja.jpg" alt="Supraja Prabhu Profile Photo" />
     </a>
-        <p class="description">Developed by Supraja Prabhu, Pediatric Speech Therapist</p>
+    <p class="dev-dev">Developed by</p>
+    <p class="dev-name">Supraja Prabhu</p>
+    <p class="dev-role">Pediatric Speech Therapist</p>
     <a href="https://linktr.ee/supraja" target="_blank" rel="noopener" class="button">Get in Touch</a>
   </div>
 
-  <footer>
-    &copy; 2025 DigiSpeak. All rights reserved.
-  </footer>
-<script>
-  console.log("Redirecting to features.html in 5 seconds…");
-  setTimeout(() => {
-    window.location.href = 'features.html';
-  }, 5000);
-</script>
+  <footer>&copy; 2025 DigiSpeak. All rights reserved.</footer>
+
+  <script>
+    console.log("Redirecting to features.html in 2.5 seconds…");
+    setTimeout(() => {
+      window.location.href = 'features.html';
+    }, 2500);
+  </script>
 </body>
 </html>
