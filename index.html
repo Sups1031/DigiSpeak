@@ -7,7 +7,7 @@
         href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Comic+Neue:wght@400;700&display=swap"
         rel="stylesheet">
-  <title>ScreenSmart</title>
+  <title>DigiSpeak</title>
 
   <style>
     :root { --vio: #667eea; --vio2: #764ba2; }
@@ -29,8 +29,10 @@
     }
     #ringWrap { position:relative; width:160px;height:160px;margin:1.5rem auto }
     svg { transform:rotate(-90deg) }
-    #ringText { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-                font-weight:700; font-size:1.6rem; color:var(--vio) }
+    #ringText {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      font-weight:700; font-size:1.6rem; color:var(--vio)
+    }
     .chip {
       border:none; padding:.7rem 1.1rem; border-radius:20px; font-weight:700;
       cursor:pointer; transition:.2s; margin:.25rem;
@@ -38,60 +40,69 @@
     }
     .chip:hover { background:#e5e7eb }
     .chip.timer-active { background:var(--vio); color:#fff }
-    .card-item {
-      margin-top: 2rem;
+    .card-item { margin-top: 2rem; }
+
+    .fade-out {
+      animation: fadeOut 1s ease forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; display: none; }
     }
   </style>
-
-  <!-- Redirect brand-new visitors -->
-  <script>
-    if (!localStorage.getItem('screensmart-onboarding')) {
-      window.location.replace('./onboarding.html');
-    }
-  </script>
 </head>
 
 <body>
-  <div class="card">
-    <h1 class="logo">ScreenSmart</h1>
+  <!-- Sound for splash -->
+  <audio id="splashSound" src="splash-chime.mp3" preload="auto"></audio>
+
+  <!-- Splash Screen -->
+  <div id="splash" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh;">
+    <h1 class="logo">DigiSpeak</h1>
+    <p style="color:white; font-style:italic; font-size:1.1rem;">
+      Healthy screen time, powered by speech therapist expertise
+    </p>
+  </div>
+
+  <!-- Main App Card -->
+  <div class="card" id="dash" style="display:none;">
+    <h1 class="logo">DigiSpeak</h1>
     <p id="tagline">Healthy screen play, powered by speech-therapist expertise.</p>
 
-    <!-- Dashboard (hidden until JS runs) -->
-    <div id="dash" style="display:none">
-      <div id="ringWrap">
-        <svg width="160" height="160">
-          <circle cx="80" cy="80" r="70" stroke="#e5e7eb" stroke-width="12" fill="none"/>
-          <circle id="ring" cx="80" cy="80" r="70" stroke="url(#g)" stroke-width="12"
-                  stroke-linecap="round" fill="none"
-                  stroke-dasharray="440" stroke-dashoffset="440"/>
-          <defs>
-            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"  stop-color="var(--vio)"/>
-              <stop offset="100%" stop-color="var(--vio2)"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <div id="ringText">0%</div>
-      </div>
-      <p style="margin-top:-.5rem">
-        Today’s limit: <strong id="limitText">—</strong> min
-      </p>
+    <div id="ringWrap">
+      <svg width="160" height="160">
+        <circle cx="80" cy="80" r="70" stroke="#e5e7eb" stroke-width="12" fill="none"/>
+        <circle id="ring" cx="80" cy="80" r="70" stroke="url(#g)" stroke-width="12"
+                stroke-linecap="round" fill="none"
+                stroke-dasharray="440" stroke-dashoffset="440"/>
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"  stop-color="var(--vio)"/>
+            <stop offset="100%" stop-color="var(--vio2)"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div id="ringText">0%</div>
+    </div>
+    <p style="margin-top:-.5rem">
+      Today’s limit: <strong id="limitText">—</strong> min
+    </p>
 
-      <!-- Quick-log buttons -->
-      <div id="quickLog">
-        <button class="chip" onclick="addMinutes(5)">+5 min</button>
-        <button class="chip" onclick="addMinutes(10)">+10 min</button>
-        <button class="chip" onclick="addMinutes(15)">+15 min</button>
-        <button id="timerBtn" class="chip" onclick="toggleTimer()">Start ▶</button>
-      </div>
+    <!-- Quick-log buttons -->
+    <div id="quickLog">
+      <button class="chip" onclick="addMinutes(5)">+5 min</button>
+      <button class="chip" onclick="addMinutes(10)">+10 min</button>
+      <button class="chip" onclick="addMinutes(15)">+15 min</button>
+      <button id="timerBtn" class="chip" onclick="toggleTimer()">Start ▶</button>
     </div>
 
-    <!-- Meet the Creator Section -->
+    <!-- Meet the Creator -->
     <div class="card-item">
       👩‍⚕️ <strong>Meet the Creator</strong><br><br>
-      <img src="supraja.jpg" alt="Supraja's Photo" style="width:100px; border-radius:50%; margin-bottom:10px;" />
+      <img src="supraja.jpg" alt="Supraja's Photo"
+           style="width:100px; border-radius:50%; margin-bottom:10px;" />
       <p style="font-size: 14px; line-height: 1.5;">
-        “Helping parents turn screen time into language, bonding & calm.”
+        “Helping parents turn screen time into communication, bonding & calm.”
         <br><br>
         — <strong>Supraja Prabhu</strong><br>
         Speech and Hearing Therapy Expert
@@ -100,14 +111,30 @@
         📷 Follow @supraja_an_aud_speechie
       </a>
     </div>
-
   </div>
 
 <script>
-/* ========= helper data ========= */
-const LIMITS = { infant:0, toddler:30, preschool:60, early:90, tween:120 };
+/* ========= On Load Splash Logic ========= */
+window.addEventListener('load', () => {
+  const splash = document.getElementById('splash');
+  const sound = document.getElementById('splashSound');
+  sound.play();
 
-/* ========= derive today’s limit ========= */
+  setTimeout(() => {
+    splash.classList.add('fade-out');
+    setTimeout(() => {
+      if (!localStorage.getItem('screensmart-onboarding')) {
+        window.location.replace('./onboarding.html');
+      } else {
+        splash.style.display = 'none';
+        document.getElementById('dash').style.display = 'block';
+      }
+    }, 1000);
+  }, 1500);
+});
+
+/* ========= Screen Time Logic ========= */
+const LIMITS = { infant:0, toddler:30, preschool:60, early:90, tween:120 };
 const data = JSON.parse(localStorage.getItem('screensmart-onboarding')||'{}');
 function ageBand(dob){
   const yrs = (Date.now()-new Date(dob))/3.154e+10;
@@ -116,18 +143,15 @@ function ageBand(dob){
 }
 const limit = LIMITS[ ageBand(data.dob) ] || 60;
 
-/* ========= load / reset daily minutes ========= */
 const today = new Date().toLocaleDateString();
 let usage = JSON.parse(localStorage.getItem('usage')||'{"date":"","min":0}');
 if(usage.date !== today){ usage = { date:today, min:0 }; saveUsage(); }
 
-/* ========= dom refs ========= */
 const ring      = document.getElementById('ring');
 const ringText  = document.getElementById('ringText');
 const limitTxt  = document.getElementById('limitText');
 const timerBtn  = document.getElementById('timerBtn');
 
-/* ========= UI functions ========= */
 function paintRing(){
   const pct = Math.min(usage.min/limit,1);
   ring.style.strokeDashoffset = 440 - 440*pct;
@@ -138,7 +162,6 @@ function addMinutes(m){
   alert('Logged! Total today: '+usage.min+' min');
 }
 
-/* ========= timer logic ========= */
 let t0=null;
 function toggleTimer(){
   if(!t0){
@@ -153,18 +176,12 @@ function toggleTimer(){
     timerBtn.classList.remove('timer-active');
   }
 }
-
-/* ========= save helper ========= */
 function saveUsage(){
   localStorage.setItem('usage', JSON.stringify(usage));
 }
 
-/* ========= kick things off ========= */
 limitTxt.textContent = limit;
 paintRing();
-document.getElementById('dash').style.display='block';
-document.getElementById('tagline').style.display='none';
-
 </script>
 </body>
 </html>
