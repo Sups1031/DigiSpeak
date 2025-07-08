@@ -1,80 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>DigiSpeak Features</title>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #E0F7F4;
-      --text: #264653;
-      --accent: #89C9B8;
-      --radius: 8px;
-      --gap: 1rem;
-    }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Fredoka', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
-    main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--gap); }
-    .title { font-family: 'Comic Neue', cursive; font-size: 2rem; font-weight: bold; margin-bottom: var(--gap); }
-    .slide { background: white; border-radius: var(--radius); padding: calc(var(--gap)*2); max-width: 400px; width: 100%; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .icon img { width: 2.5rem; height: 2.5rem; }
-    .slide h2 { margin-top: var(--gap); font-family: 'Comic Neue', cursive; font-size: 1.5rem; }
-    .slide p { margin-top: var(--gap); font-size: 1rem; line-height: 1.4; }
-    .controls { display: flex; align-items: center; gap: var(--gap); margin-top: var(--gap); }
-    .controls input[type="radio"] { accent-color: var(--accent); width: 1rem; height: 1rem; cursor: pointer; }
-    .arrow { background: none; border: none; font-size: 1.5rem; color: var(--accent); cursor: pointer; transition: color 0.2s; }
-    .arrow:hover { color: var(--text); }
-    .skip-container { margin-top: var(--gap); }
-    .skip { font-family: 'Comic Neue', cursive; color: var(--accent); text-decoration: none; font-size: 0.9rem; display: block; }
-    @media (max-width:600px) { .slide { padding: var(--gap); } .title { font-size: 1.75rem; } }
-  </style>
-</head>
-<body>
-  <main>
-    <div class="title">What DigiSpeak Does</div>
-    <div class="slide" id="slide"></div>
-    <div class="controls" id="controls"></div>
-    <div class="skip-container"><a href="index.html" class="skip">Skip →</a></div>
-  </main>
-  <script>
-    const slides = [
-      { iconUrl: 'assets/icon_screenfree.png', title: 'Screen-Free Sparks', description: 'Discover playful, off-screen activities tailored to your child’s age and interests.' },
-      { iconUrl: 'assets/icon_cowatching.png', title: 'SmartScreen Picks', description: 'Find safe, educational shows and apps carefully curated to support your child’s development.' },
-      { iconUrl: 'assets/icon_blog.png', title: 'Gentle Guides', description: 'Receive warm tips and insights from a communication expert written just for you.' },
-      { iconUrl: 'assets/icon_ai.png', title: 'Your Question Corner', description: 'Ask any question about screen time, speech, or child development and get clear answers you can trust.' }
-    ];
+/* 1. Fluid card width, capped for large screens */
+.slide {
+  width: 90%;            /* take up to 90% of the viewport */
+  max-width: 400px;      /* but never exceed 400px on desktop */
+  margin: 0 auto;        /* center horizontally */
+}
 
-    let idx = 0;
-    const slideEl = document.getElementById('slide');
-    const controlsEl = document.getElementById('controls');
+/* 2. Flexbox for vertical stacking and centering */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* horizontal center */
+  justify-content: center; /* vertical center */
+  min-height: 100vh;     /* fill full height */
+  padding: 1rem;
+}
 
-    function render() {
-      const s = slides[idx];
-      slideEl.innerHTML = `
-        <div class="icon"><img src="${s.iconUrl}" alt="${s.title} icon"/></div>
-        <h2>${s.title}</h2>
-        <p>${s.description}</p>
-      `;
-      controlsEl.innerHTML = '';
-      slides.forEach((_, i) => {
-        const r = document.createElement('input');
-        r.type = 'radio'; r.name = 'slide'; r.value = i;
-        if (i === idx) r.checked = true;
-        r.addEventListener('change', () => { idx = i; render(); });
-        controlsEl.append(r);
-      });
-      const arrow = document.createElement('button');
-      arrow.className = 'arrow'; arrow.textContent = '→';
-      arrow.addEventListener('click', () => { idx = (idx + 1) % slides.length; render(); });
-      controlsEl.append(arrow);
-    }
+/* 3. Controls row centers its items, with gap */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
 
-    render();
-    setInterval(() => { idx = (idx + 1) % slides.length; render(); }, 2500);
-  </script>
-</body>
-</html>
+/* 4. Skip below controls, always centered */
+.skip-container {
+  width: 100%;
+  text-align: center;    /* center the Skip link */
+  margin-top: 0.5rem;
+}
+
+/* 5. Responsive typography with clamp() */
+.title {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+.slide h2 {
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+}
