@@ -1,23 +1,163 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>DigiSpeak</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Comic+Neue:wght@400;700&display=swap"
+        rel="stylesheet">
+  <title>ScreenSmart</title>
+
+  <style>
+    :root { --vio: #667eea; --vio2: #764ba2; }
+    body {
+      background: linear-gradient(135deg, var(--vio) 0%, var(--vio2) 100%);
+      margin: 0; display:flex; align-items:center; justify-content:center;
+      min-height: 100vh; font-family: 'Comic Neue', cursive; color:#fff;
+      text-align:center; padding:2rem;
+    }
+    .card {
+      background: rgba(255,255,255,.93); color:#374151; padding:3rem 2rem;
+      border-radius:24px; box-shadow:0 20px 40px rgba(0,0,0,.12);
+      max-width:400px; width:100%;
+    }
+    h1.logo {
+      font-family:'Fredoka',cursive; font-size:2.3rem; margin:0;
+      background:linear-gradient(135deg,var(--vio),var(--vio2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    #ringWrap { position:relative; width:160px;height:160px;margin:1.5rem auto }
+    svg { transform:rotate(-90deg) }
+    #ringText { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                font-weight:700; font-size:1.6rem; color:var(--vio) }
+    .chip {
+      border:none; padding:.7rem 1.1rem; border-radius:20px; font-weight:700;
+      cursor:pointer; transition:.2s; margin:.25rem;
+      background:#f3f4f6; color:#374151;
+    }
+    .chip:hover { background:#e5e7eb }
+    .chip.timer-active { background:var(--vio); color:#fff }
+    footer {
+      margin-top: 2rem;
+      font-size: 13px;
+      color: #ccc;
+      text-align: center;
+    }
+  </style>
+
+  <script>
+    if (!localStorage.getItem('screensmart-onboarding')) {
+      window.location.replace('./onboarding.html');
+    }
+  </script>
 </head>
+
 <body>
-    <div class="splash-screen">
-        <img src="assets/logo.png" alt="Logo" class="logo" />
-        <h1>DigiSpeak</h1>
-        <p class="tagline">Healthy Screen Time, Powered by Therapist Expertise</p>
-        <p class="credit">by Supraja Prabhu, Pediatric Speech and Hearing Therapist</p>
+  <div class="card">
+    <h1 class="logo">ScreenSmart</h1>
+    <p id="tagline">Healthy screen play, made simple.</p>
+
+    <div id="dash" style="display:none">
+      <div id="ringWrap">
+        <svg width="160" height="160">
+          <circle cx="80" cy="80" r="70" stroke="#e5e7eb" stroke-width="12" fill="none"/>
+          <circle id="ring" cx="80" cy="80" r="70" stroke="url(#g)" stroke-width="12"
+                  stroke-linecap="round" fill="none"
+                  stroke-dasharray="440" stroke-dashoffset="440"/>
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"  stop-color="var(--vio)"/>
+              <stop offset="100%" stop-color="var(--vio2)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div id="ringText">0%</div>
+      </div>
+      <p style="margin-top:-.5rem">
+        Today’s limit: <strong id="limitText">—</strong> min
+      </p>
+
+      <div id="quickLog">
+        <button class="chip" onclick="addMinutes(5)">+5 min</button>
+        <button class="chip" onclick="addMinutes(10)">+10 min</button>
+        <button class="chip" onclick="addMinutes(15)">+15 min</button>
+        <button id="timerBtn" class="chip" onclick="toggleTimer()">Start ▶</button>
+      </div>
+
+      <div style="margin-top: 2rem;">
+        <p><strong>👩‍⚕️ Meet the Creator</strong></p>
+        <img src="supraja.jpg" alt="Supraja's Photo" style="width:100px; border-radius:50%; margin-bottom:10px;" />
+        <p style="font-size: 14px; line-height: 1.5;">
+          “Helping parents turn screen time into language, bonding & calm.”<br><br>
+          — <strong>Supraja Prabhu</strong><br>
+          Speech and Hearing Therapy Expert
+        </p>
+        <a href="https://instagram.com/supraja_an_aud_speechie" target="_blank" class="chip">
+          📷 Follow @supraja_an_aud_speechie
+        </a>
+      </div>
     </div>
-    <script>
-        setTimeout(() => {
-            window.location.href = "onboarding.html";
-        }, 2000);
-    </script>
+  </div>
+
+  <footer>
+    🧠 Created by Supraja Prabhu | Speech and Hearing Therapy Expert | 
+    <a href="https://instagram.com/supraja_an_aud_speechie" target="_blank" style="color:#ccc">
+      @supraja_an_aud_speechie
+    </a>
+  </footer>
+
+  <script>
+    const LIMITS = { infant:0, toddler:30, preschool:60, early:90, tween:120 };
+    const data = JSON.parse(localStorage.getItem('screensmart-onboarding')||'{}');
+    function ageBand(dob){
+      const yrs = (Date.now()-new Date(dob))/3.154e+10;
+      if(yrs<2) return 'infant'; if(yrs<3) return 'toddler';
+      if(yrs<6) return 'preschool'; if(yrs<9) return 'early'; return 'tween';
+    }
+    const limit = LIMITS[ ageBand(data.dob) ] || 60;
+
+    const today = new Date().toLocaleDateString();
+    let usage = JSON.parse(localStorage.getItem('usage')||'{"date":"","min":0}');
+    if(usage.date !== today){ usage = { date:today, min:0 }; saveUsage(); }
+
+    const ring      = document.getElementById('ring');
+    const ringText  = document.getElementById('ringText');
+    const limitTxt  = document.getElementById('limitText');
+    const timerBtn  = document.getElementById('timerBtn');
+
+    function paintRing(){
+      const pct = Math.min(usage.min/limit,1);
+      ring.style.strokeDashoffset = 440 - 440*pct;
+      ringText.textContent = Math.round(pct*100)+'%';
+    }
+    function addMinutes(m){
+      usage.min += m; saveUsage(); paintRing();
+      alert('Logged! Total today: '+usage.min+' min');
+    }
+
+    let t0=null;
+    function toggleTimer(){
+      if(!t0){
+        t0 = Date.now();
+        timerBtn.textContent = 'Stop ⏹';
+        timerBtn.classList.add('timer-active');
+      }else{
+        const diff = Math.round((Date.now()-t0)/60000);
+        addMinutes(diff);
+        t0=null;
+        timerBtn.textContent='Start ▶';
+        timerBtn.classList.remove('timer-active');
+      }
+    }
+    function saveUsage(){
+      localStorage.setItem('usage', JSON.stringify(usage));
+    }
+
+    limitTxt.textContent = limit;
+    paintRing();
+    document.getElementById('dash').style.display='block';
+    document.getElementById('tagline').style.display='none';
+  </script>
 </body>
 </html>
