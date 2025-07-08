@@ -37,7 +37,6 @@ max-width: 350px; /* bump up the cap */
   animation: pulse-logo 4s ease-in-out infinite;
 }
 
-    
 .title-container {
   /* center everything in here */
   display: flex;
@@ -45,7 +44,6 @@ max-width: 350px; /* bump up the cap */
   align-items: center;
   padding: 0 1rem;
 }
-    
 @keyframes pulse-logo {
   0%, 100% { transform: scale(1); }
   50%      { transform: scale(1.1); }
@@ -59,11 +57,13 @@ max-width: 350px; /* bump up the cap */
       margin: 0.5rem 0;
       animation: pulse 3s ease-in-out infinite;
     }
-    .tagline {
-      font-family: 'Comic Neue', cursive;
-      font-size: 1.25rem;
-      margin: 0;
-    }
+.tagline {
+  font-family: 'Comic Neue', cursive;
+  font-size: 1.25rem;
+  max-width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
     .spacer { flex: 1; }
     .footer-cta {
       text-align: center;
@@ -128,6 +128,25 @@ max-width: 350px; /* bump up the cap */
       .tagline { font-size: 1.1rem; }
       .profile-link { width: 40vw; max-width: 120px; }
     }
+.footer-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.footer-info .dev-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .footer-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
   </style>
 </head>
 <body>
