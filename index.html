@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,14 +39,12 @@
     }
     .chip:hover { background:#e5e7eb }
     .chip.timer-active { background:var(--vio); color:#fff }
-    footer {
+    .card-item {
       margin-top: 2rem;
-      font-size: 13px;
-      color: #ccc;
-      text-align: center;
     }
   </style>
 
+  <!-- Redirect brand-new visitors -->
   <script>
     if (!localStorage.getItem('screensmart-onboarding')) {
       window.location.replace('./onboarding.html');
@@ -56,8 +55,9 @@
 <body>
   <div class="card">
     <h1 class="logo">ScreenSmart</h1>
-    <p id="tagline">Healthy screen play, made simple.</p>
+    <p id="tagline">Healthy screen play, powered by speech-therapist expertise.</p>
 
+    <!-- Dashboard (hidden until JS runs) -->
     <div id="dash" style="display:none">
       <div id="ringWrap">
         <svg width="160" height="160">
@@ -78,86 +78,94 @@
         Today’s limit: <strong id="limitText">—</strong> min
       </p>
 
+      <!-- Quick-log buttons -->
       <div id="quickLog">
         <button class="chip" onclick="addMinutes(5)">+5 min</button>
         <button class="chip" onclick="addMinutes(10)">+10 min</button>
         <button class="chip" onclick="addMinutes(15)">+15 min</button>
         <button id="timerBtn" class="chip" onclick="toggleTimer()">Start ▶</button>
       </div>
-
-      <div style="margin-top: 2rem;">
-        <p><strong>👩‍⚕️ Meet the Creator</strong></p>
-        <img src="supraja.jpg" alt="Supraja's Photo" style="width:100px; border-radius:50%; margin-bottom:10px;" />
-        <p style="font-size: 14px; line-height: 1.5;">
-          “Helping parents turn screen time into language, bonding & calm.”<br><br>
-          — <strong>Supraja Prabhu</strong><br>
-          Speech and Hearing Therapy Expert
-        </p>
-        <a href="https://instagram.com/supraja_an_aud_speechie" target="_blank" class="chip">
-          📷 Follow @supraja_an_aud_speechie
-        </a>
-      </div>
     </div>
+
+    <!-- Meet the Creator Section -->
+    <div class="card-item">
+      👩‍⚕️ <strong>Meet the Creator</strong><br><br>
+      <img src="supraja.jpg" alt="Supraja's Photo" style="width:100px; border-radius:50%; margin-bottom:10px;" />
+      <p style="font-size: 14px; line-height: 1.5;">
+        “Helping parents turn screen time into language, bonding & calm.”
+        <br><br>
+        — <strong>Supraja Prabhu</strong><br>
+        Speech and Hearing Therapy Expert
+      </p>
+      <a href="https://instagram.com/supraja_an_aud_speechie" target="_blank" class="chip">
+        📷 Follow @supraja_an_aud_speechie
+      </a>
+    </div>
+
   </div>
 
-  <footer>
-    🧠 Created by Supraja Prabhu | Speech and Hearing Therapy Expert | 
-    <a href="https://instagram.com/supraja_an_aud_speechie" target="_blank" style="color:#ccc">
-      @supraja_an_aud_speechie
-    </a>
-  </footer>
+<script>
+/* ========= helper data ========= */
+const LIMITS = { infant:0, toddler:30, preschool:60, early:90, tween:120 };
 
-  <script>
-    const LIMITS = { infant:0, toddler:30, preschool:60, early:90, tween:120 };
-    const data = JSON.parse(localStorage.getItem('screensmart-onboarding')||'{}');
-    function ageBand(dob){
-      const yrs = (Date.now()-new Date(dob))/3.154e+10;
-      if(yrs<2) return 'infant'; if(yrs<3) return 'toddler';
-      if(yrs<6) return 'preschool'; if(yrs<9) return 'early'; return 'tween';
-    }
-    const limit = LIMITS[ ageBand(data.dob) ] || 60;
+/* ========= derive today’s limit ========= */
+const data = JSON.parse(localStorage.getItem('screensmart-onboarding')||'{}');
+function ageBand(dob){
+  const yrs = (Date.now()-new Date(dob))/3.154e+10;
+  if(yrs<2) return 'infant'; if(yrs<3) return 'toddler';
+  if(yrs<6) return 'preschool'; if(yrs<9) return 'early'; return 'tween';
+}
+const limit = LIMITS[ ageBand(data.dob) ] || 60;
 
-    const today = new Date().toLocaleDateString();
-    let usage = JSON.parse(localStorage.getItem('usage')||'{"date":"","min":0}');
-    if(usage.date !== today){ usage = { date:today, min:0 }; saveUsage(); }
+/* ========= load / reset daily minutes ========= */
+const today = new Date().toLocaleDateString();
+let usage = JSON.parse(localStorage.getItem('usage')||'{"date":"","min":0}');
+if(usage.date !== today){ usage = { date:today, min:0 }; saveUsage(); }
 
-    const ring      = document.getElementById('ring');
-    const ringText  = document.getElementById('ringText');
-    const limitTxt  = document.getElementById('limitText');
-    const timerBtn  = document.getElementById('timerBtn');
+/* ========= dom refs ========= */
+const ring      = document.getElementById('ring');
+const ringText  = document.getElementById('ringText');
+const limitTxt  = document.getElementById('limitText');
+const timerBtn  = document.getElementById('timerBtn');
 
-    function paintRing(){
-      const pct = Math.min(usage.min/limit,1);
-      ring.style.strokeDashoffset = 440 - 440*pct;
-      ringText.textContent = Math.round(pct*100)+'%';
-    }
-    function addMinutes(m){
-      usage.min += m; saveUsage(); paintRing();
-      alert('Logged! Total today: '+usage.min+' min');
-    }
+/* ========= UI functions ========= */
+function paintRing(){
+  const pct = Math.min(usage.min/limit,1);
+  ring.style.strokeDashoffset = 440 - 440*pct;
+  ringText.textContent = Math.round(pct*100)+'%';
+}
+function addMinutes(m){
+  usage.min += m; saveUsage(); paintRing();
+  alert('Logged! Total today: '+usage.min+' min');
+}
 
-    let t0=null;
-    function toggleTimer(){
-      if(!t0){
-        t0 = Date.now();
-        timerBtn.textContent = 'Stop ⏹';
-        timerBtn.classList.add('timer-active');
-      }else{
-        const diff = Math.round((Date.now()-t0)/60000);
-        addMinutes(diff);
-        t0=null;
-        timerBtn.textContent='Start ▶';
-        timerBtn.classList.remove('timer-active');
-      }
-    }
-    function saveUsage(){
-      localStorage.setItem('usage', JSON.stringify(usage));
-    }
+/* ========= timer logic ========= */
+let t0=null;
+function toggleTimer(){
+  if(!t0){
+    t0 = Date.now();
+    timerBtn.textContent = 'Stop ⏹';
+    timerBtn.classList.add('timer-active');
+  }else{
+    const diff = Math.round((Date.now()-t0)/60000);
+    addMinutes(diff);
+    t0=null;
+    timerBtn.textContent='Start ▶';
+    timerBtn.classList.remove('timer-active');
+  }
+}
 
-    limitTxt.textContent = limit;
-    paintRing();
-    document.getElementById('dash').style.display='block';
-    document.getElementById('tagline').style.display='none';
-  </script>
+/* ========= save helper ========= */
+function saveUsage(){
+  localStorage.setItem('usage', JSON.stringify(usage));
+}
+
+/* ========= kick things off ========= */
+limitTxt.textContent = limit;
+paintRing();
+document.getElementById('dash').style.display='block';
+document.getElementById('tagline').style.display='none';
+
+</script>
 </body>
 </html>
