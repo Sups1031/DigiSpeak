@@ -42,14 +42,16 @@
   </main>
   <script>
     const slides = [
-      { iconUrl:'images/clip-screen-free.svg', title:'Screen-Free Sparks', description:'Discover playful, off-screen activities tailored to your child’s age and interests.' },
-      { iconUrl:'images/clip-smartscreen.svg', title:'SmartScreen Picks', description:'Find safe, educational shows and apps carefully curated to support your child’s development.' },
-      { iconUrl:'images/clip-guides.svg', title:'Gentle Guides', description:'Receive insights from a communication expert written just for you.' },
-      { iconUrl:'images/clip-question.svg', title:'Your Question Corner', description:'Ask any question about screen time, speech, or child development and get clear answers you can trust.' }
+      { iconUrl: 'assets/icon_screenfree.png', title: 'Screen-Free Sparks', description: 'Discover playful, off-screen activities tailored to your child’s age and interests.' },
+      { iconUrl: 'assets/icon_cowatching.png', title: 'SmartScreen Picks', description: 'Find safe, educational shows and apps carefully curated to support your child’s development.' },
+      { iconUrl: 'assets/icon_blog.png', title: 'Gentle Guides', description: 'Receive warm tips and insights from a communication expert written just for you.' },
+      { iconUrl: 'assets/icon_ai.png', title: 'Your Question Corner', description: 'Ask any question about screen time, speech, or child development and get clear answers you can trust.' }
     ];
+
     let idx = 0;
     const slideEl = document.getElementById('slide');
     const controlsEl = document.getElementById('controls');
+
     function render() {
       const s = slides[idx];
       slideEl.innerHTML = `
@@ -70,6 +72,7 @@
       arrow.addEventListener('click', () => { idx = (idx + 1) % slides.length; render(); });
       controlsEl.append(arrow);
     }
+
     render();
     setInterval(() => { idx = (idx + 1) % slides.length; render(); }, 2500);
   </script>
