@@ -202,20 +202,22 @@
         `<input type="radio" name="indicator" ${i === idx ? 'checked' : ''} onclick="goTo(${i})" />`
       ).join('');
     }
+function renderSlide() {
+  const s = slides[idx];
 
-    function renderSlide() {
-      const s = slides[idx];
- // render the standalone icon above the card
-document.getElementById('slideIcon').innerHTML =
-  `<img src="${s.icon}" alt="${s.title} icon" class="icon"/>`;
- // render only title & description inside the card
- slideEl.innerHTML = `
-   <h2>${s.title}</h2>
-   <p>${s.description}</p>
- `;      
-      renderRadios();
-      nextBtn.innerHTML = idx < slides.length - 1 ? '&rarr;' : '&#10003;';
-    }
+  // 1) populate the standalone icon
+  document.getElementById('slideIcon').innerHTML =
+    `<img src="${s.icon}" alt="${s.title} icon" class="icon" />`;
+
+  // 2) then fill the card with title + description
+  slideEl.innerHTML = `
+    <h2>${s.title}</h2>
+    <p>${s.description}</p>
+  `;
+
+  renderRadios();
+  nextBtn.innerHTML = idx < slides.length - 1 ? '&rarr;' : '&#10003;';
+}
 
     function goTo(i) {
       idx = i;
