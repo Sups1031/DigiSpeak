@@ -205,11 +205,9 @@
 function renderSlide() {
   const s = slides[idx];
 
-  // 1) populate the standalone icon
   document.getElementById('slideIcon').innerHTML =
     `<img src="${s.icon}" alt="${s.title} icon" class="icon" />`;
 
-  // 2) then fill the card with title + description
   slideEl.innerHTML = `
     <h2>${s.title}</h2>
     <p>${s.description}</p>
@@ -218,7 +216,6 @@ function renderSlide() {
   renderRadios();
   nextBtn.innerHTML = idx < slides.length - 1 ? '&rarr;' : '&#10003;';
 }
-
     function goTo(i) {
       idx = i;
       renderSlide();
