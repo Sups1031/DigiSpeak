@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What DigiSpeak Offers</title>
   <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-color: #DFFCFB;
@@ -20,236 +17,162 @@
       --accent-teal: #6BC8C3;
       --accent-coral: #EE5C5C;
     }
-
-    /* Base */
-    * { box-sizing: border-box; }
-    html { font-size: 100%; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-color);
+      background: var(--bg-color);
       color: var(--text-color);
     }
-    h1, h2 { font-family: 'Fredoka One', cursive; color: var(--heading-color); margin: 0; }
-    p { margin: 0; line-height: 1.5; }
+    h1, h2 { font-family: 'Fredoka One', cursive; color: var(--heading-color); }
+    p { line-height: 1.4; }
 
-    /* Slider setup */
-    main {
+    .slider {
       position: relative;
       overflow: hidden;
+      width: 100%;
     }
-    input[name="slider"] {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
+    .slider input[type="radio"] {
+      display: none;
     }
-    .slides {
+    .slider .slides {
       display: flex;
       width: 400%;
-      transition: transform 0.5s ease-in-out;
+      transition: transform 0.4s ease;
     }
-    #slide1:checked ~ .slides { transform: translateX(   0%); }
-    #slide2:checked ~ .slides { transform: translateX( -100%); }
-    #slide3:checked ~ .slides { transform: translateX( -200%); }
-    #slide4:checked ~ .slides { transform: translateX( -300%); }
+    .slider input#slide1:checked ~ .slides { transform: translateX(   0%); }
+    .slider input#slide2:checked ~ .slides { transform: translateX( -25%); }
+    .slider input#slide3:checked ~ .slides { transform: translateX( -50%); }
+    .slider input#slide4:checked ~ .slides { transform: translateX( -75%); }
 
-    /* Each slide */
     .slide {
-      min-width: 100%;
+      width: 25%;
       padding: 2rem 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .slide h1 {
-      margin-top: 2rem;
-      margin-bottom: 2rem;
       text-align: center;
-      font-size: 1.75rem;
     }
-    .slide img {
-      max-width: 80px;
-      height: auto;
-      margin-bottom: 1.5rem;
-    }
+    .slide h1 { font-size: 1.75rem; margin-bottom: 1.5rem; }
+    .slide img { max-width: 80px; margin-bottom: 1.5rem; }
 
-    /* Feature card */
     .feature-card {
       background: var(--card-bg);
       padding: 1.5rem;
       border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin: 0 auto 1.5rem;
       max-width: 90%;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .feature-card h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .feature-card p {
-      color: var(--text-color);
-    }
+    .feature-card h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
 
-    /* Controls */
     .controls {
       display: flex;
+      justify-content: center;
       align-items: center;
       gap: 1rem;
-      margin-top: 1.5rem;
     }
-    .slide-indicators {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .slide-indicators { display: flex; gap: 0.5rem; }
     .indicator {
-      width: 12px;
-      height: 12px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       background: var(--accent-coral);
       cursor: pointer;
       border: 2px solid transparent;
     }
-    /* Indicator active states */
-    #slide1:checked ~ .slides .slide:nth-child(1) .indicator[for="slide1"],
-    #slide2:checked ~ .slides .slide:nth-child(2) .indicator[for="slide2"],
-    #slide3:checked ~ .slides .slide:nth-child(3) .indicator[for="slide3"],
-    #slide4:checked ~ .slides .slide:nth-child(4) .indicator[for="slide4"] {
+    .slider input#slide1:checked ~ .slides .indicator[for="slide1"],
+    .slider input#slide2:checked ~ .slides .indicator[for="slide2"],
+    .slider input#slide3:checked ~ .slides .indicator[for="slide3"],
+    .slider input#slide4:checked ~ .slides .indicator[for="slide4"] {
       background: var(--accent-teal);
       border-color: var(--accent-teal);
     }
-    .indicator:focus {
-      outline: 2px solid var(--accent-teal);
-    }
 
-    .next-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--accent-coral);
-      cursor: pointer;
-    }
-    .next-btn:focus {
-      outline: 2px solid var(--accent-teal);
-    }
-    .skip-btn {
-      background: var(--accent-teal);
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 1rem;
-      font-weight: 600;
-    }
-    .skip-btn:focus {
-      outline: 2px solid var(--accent-coral);
-    }
+    .next { font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--accent-coral); }
+    .skip { display: inline-block; margin-top: 1rem; background: var(--accent-teal); color: #fff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; }
 
-    /* Breakpoints */
     @media (min-width: 768px) {
-      .slide { padding: 3rem 2rem; }
-      .feature-card { max-width: 60%; }
       .slide h1 { font-size: 2.25rem; }
+      .feature-card { max-width: 60%; }
       .feature-card h2 { font-size: 1.75rem; }
     }
     @media (min-width: 1024px) {
-      .slide { padding: 4rem 3rem; }
-      .feature-card { max-width: 40%; }
       .slide h1 { font-size: 2.75rem; }
+      .feature-card { max-width: 40%; }
       .feature-card h2 { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
-  <main role="region" aria-label="What DigiSpeak Offers Slide Deck">
-    <!-- hidden radios to control slides -->
+  <div class="slider">
     <input type="radio" name="slider" id="slide1" checked>
     <input type="radio" name="slider" id="slide2">
     <input type="radio" name="slider" id="slide3">
     <input type="radio" name="slider" id="slide4">
-
     <div class="slides">
-      <!-- Slide 1 -->
-      <section class="slide" aria-labelledby="title1">
+      <div class="slide">
         <h1>What DigiSpeak Offers</h1>
-        <img src="assets/icon_screenfree.png" alt="Unplug & Connect icon" />
+        <img src="assets/icon_screenfree.png" alt="Unplug & Connect icon">
         <div class="feature-card">
-          <h2 id="title1">Unplug & Connect</h2>
+          <h2>Unplug & Connect</h2>
           <p>Discover playful, off-screen activities tailored to your child’s age and interests.</p>
         </div>
         <div class="controls">
-          <div class="slide-indicators" role="radiogroup" aria-label="Slide navigation">
-            <label for="slide1" class="indicator" role="radio" aria-checked="true" tabindex="0"></label>
-            <label for="slide2" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide3" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide4" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-          </div>
-          <label for="slide2" class="next-btn" role="button" aria-label="Next Slide" tabindex="0">▶</label>
+          <label for="slide1" class="indicator"></label>
+          <label for="slide2" class="indicator"></label>
+          <label for="slide3" class="indicator"></label>
+          <label for="slide4" class="indicator"></label>
+          <label for="slide2" class="next" aria-label="Next slide">▶</label>
         </div>
-        <button class="skip-btn" type="button" aria-label="Skip Slides">Skip</button>
-      </section>
+        <a href="onboarding.html" class="skip">Skip</a>
+      </div>
 
-      <!-- Slide 2 -->
-      <section class="slide" aria-labelledby="title2">
+      <div class="slide">
         <h1>What DigiSpeak Offers</h1>
-        <img src="assets/icon_cowatching.png" alt="Safe Screen Picks icon" />
+        <img src="assets/icon_cowatching.png" alt="Safe Screen Picks icon">
         <div class="feature-card">
-          <h2 id="title2">Safe Screen Picks</h2>
+          <h2>Safe Screen Picks</h2>
           <p>Find carefully curated media to support your child’s development.</p>
         </div>
         <div class="controls">
-          <div class="slide-indicators" role="radiogroup" aria-label="Slide navigation">
-            <label for="slide1" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide2" class="indicator" role="radio" aria-checked="true" tabindex="0"></label>
-            <label for="slide3" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide4" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-          </div>
-          <label for="slide3" class="next-btn" role="button" aria-label="Next Slide" tabindex="0">▶</label>
+          <label for="slide1" class="indicator"></label>
+          <label for="slide2" class="indicator"></label>
+          <label for="slide3" class="indicator"></label>
+          <label for="slide4" class="indicator"></label>
+          <label for="slide3" class="next" aria-label="Next slide">▶</label>
         </div>
-        <button class="skip-btn" type="button" aria-label="Skip Slides">Skip</button>
-      </section>
+        <a href="onboarding.html" class="skip">Skip</a>
+      </div>
 
-      <!-- Slide 3 -->
-      <section class="slide" aria-labelledby="title3">
+      <div class="slide">
         <h1>What DigiSpeak Offers</h1>
-        <img src="assets/icon_blog.png" alt="Gentle Guides icon" />
+        <img src="assets/icon_blog.png" alt="Gentle Guides icon">
         <div class="feature-card">
-          <h2 id="title3">Gentle Guides</h2>
+          <h2>Gentle Guides</h2>
           <p>Receive insights from a communication expert for a healthy screentime.</p>
         </div>
         <div class="controls">
-          <div class="slide-indicators" role="radiogroup" aria-label="Slide navigation">
-            <label for="slide1" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide2" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide3" class="indicator" role="radio" aria-checked="true" tabindex="0"></label>
-            <label for="slide4" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-          </div>
-          <label for="slide4" class="next-btn" role="button" aria-label="Next Slide" tabindex="0">▶</label>
+          <label for="slide1" class="indicator"></label>
+          <label for="slide2" class="indicator"></label>
+          <label for="slide3" class="indicator"></label>
+          <label for="slide4" class="indicator"></label>
+          <label for="slide4" class="next" aria-label="Next slide">▶</label>
         </div>
-        <button class="skip-btn" type="button" aria-label="Skip Slides">Skip</button>
-      </section>
+        <a href="onboarding.html" class="skip">Skip</a>
+      </div>
 
-      <!-- Slide 4 -->
-      <section class="slide" aria-labelledby="title4">
+      <div class="slide">
         <h1>What DigiSpeak Offers</h1>
-        <img src="assets/icon_ai.png" alt="Your Question Corner icon" />
+        <img src="assets/icon_ai.png" alt="Your Question Corner icon">
         <div class="feature-card">
-          <h2 id="title4">Your Question Corner</h2>
+          <h2>Your Question Corner</h2>
           <p>Thoughtful answers to any of your queries about screentime, speech, or child development.</p>
         </div>
         <div class="controls">
-          <div class="slide-indicators" role="radiogroup" aria-label="Slide navigation">
-            <label for="slide1" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide2" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide3" class="indicator" role="radio" aria-checked="false" tabindex="0"></label>
-            <label for="slide4" class="indicator" role="radio" aria-checked="true" tabindex="0"></label>
-          </div>
-          <!-- no next on last slide -->
+          <label for="slide1" class="indicator"></label>
+          <label for="slide2" class="indicator"></label>
+          <label for="slide3" class="indicator"></label>
+          <label for="slide4" class="indicator"></label>
         </div>
-        <button class="skip-btn" type="button" aria-label="Skip Slides">Skip</button>
-      </section>
+        <a href="onboarding.html" class="skip">Get Started</a>
+      </div>
     </div>
-  </main>
+  </div>
 </body>
 </html>
