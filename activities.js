@@ -1,4 +1,6 @@
 const activities = [
+console.log("activities.js is running, total activities:", activities.length);
+
   // ----- Age 0-1 years -----
   {
     name: "Tummy Time Play",
@@ -1362,5 +1364,31 @@ function filterActivities() {
   currentPage = 0;
   displayActivities(filtered.sort(() => Math.random() - 0.5)); // Shuffle results
 }
+function displayActivities(list) {
+  const container = document.getElementById('activities-list');
+  container.innerHTML = ""; // Clear old content
+
+  if (list.length === 0) {
+    container.innerHTML = "<p>No activities available.</p>";
+    return;
+  }
+
+  list.forEach(activity => {
+    const card = document.createElement('div');
+    card.className = "activity-card";
+    card.innerHTML = `
+      <h3>${activity.name}</h3>
+      <p>${activity.description}</p>
+      <p><strong>Age:</strong> ${activity.age.join(", ")}</p>
+      <p><strong>Skills:</strong> ${activity.skillsAchieved.fineMotor}, ${activity.skillsAchieved.cognitive}</p>
+    `;
+    container.appendChild(card);
+  });
+}
 
 // Display & pagination functions remain unchanged
+document.addEventListener('DOMContentLoaded', () => {
+  displayActivities(activities); // Show all activities initially
+  document.getElementById('filter-btn').addEventListener('click', filterActivities);
+});
+
