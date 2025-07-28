@@ -1,7 +1,6 @@
 console.log("activities.js started running");
-const activities = [
-console.log("activities.js is running, total activities:", activities.length);
 
+const activities = [
   // ----- Age 0-1 years -----
   {
     name: "Tummy Time Play",
@@ -1324,6 +1323,7 @@ activities.push(
     }
   }
 );
+console.log("Total activities:", activities.length);
 
 // ---- Filtering Logic with Closest Matches ----
 function filterActivities() {
