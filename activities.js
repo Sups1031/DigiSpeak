@@ -1,3 +1,4 @@
+console.log("activities.js started running");
 const activities = [
 console.log("activities.js is running, total activities:", activities.length);
 
