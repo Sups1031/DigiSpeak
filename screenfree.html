@@ -1,1 +1,83 @@
-<h2>Screen-Free questionnaire and suggestions will load here</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Screen-Free Activities</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="activities.css" />
+</head>
+<body>
+  <header>
+    <h1>Screen-Free Activities</h1>
+  </header>
+
+  <!-- Filter Section -->
+  <section id="filters">
+    <form id="filter-form">
+      <label for="age">Child's Age:</label>
+      <select id="age">
+        <option value="">All Ages</option>
+        <option value="0-1">0–1 years</option>
+        <option value="1-2">1–2 years</option>
+        <option value="2-4">2–4 years</option>
+        <option value="5-7">5–7 years</option>
+        <option value="8-10">8–10 years</option>
+      </select>
+
+      <label for="interests">Interests:</label>
+      <select id="interests">
+        <option value="">All Interests</option>
+        <option value="puzzles">Puzzles</option>
+        <option value="arts">Arts & Crafts</option>
+        <option value="building">Building</option>
+        <option value="pretend">Pretend Play</option>
+        <option value="outdoor">Outdoor Games</option>
+        <option value="music">Music & Dance</option>
+        <option value="nature">Nature</option>
+        <option value="sensory">Sensory Play</option>
+      </select>
+
+      <label for="time">Time Available:</label>
+      <select id="time">
+        <option value="">Any</option>
+        <option value="5-10">5–10 mins</option>
+        <option value="15-30">15–30 mins</option>
+        <option value="30-60">30–60 mins</option>
+        <option value="1-2h">1–2 hours</option>
+      </select>
+
+      <label for="season">Season/Festival:</label>
+      <select id="season">
+        <option value="">All</option>
+        <option value="summer">Summer</option>
+        <option value="monsoon">Monsoon</option>
+        <option value="winter">Winter</option>
+        <option value="holi">Holi</option>
+        <option value="diwali">Diwali</option>
+        <option value="pongal">Pongal</option>
+        <option value="christmas">Christmas</option>
+      </select>
+
+      <label for="supervision">Supervision Needed:</label>
+      <select id="supervision">
+        <option value="">Any</option>
+        <option value="independent">Independent</option>
+        <option value="guided">Guided</option>
+        <option value="adult">Adult Present</option>
+      </select>
+
+      <button type="button" id="filter-btn">Find Activities</button>
+    </form>
+  </section>
+
+  <!-- Activity List -->
+  <section id="activities-container">
+    <h2>Activity Suggestions</h2>
+    <p id="no-results" style="display:none;">No exact matches found. Try adjusting filters.</p>
+    <div id="activities-list"></div>
+  </section>
+
+  <script src="activities.js" defer></script>
+</body>
+</html>
